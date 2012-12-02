@@ -18,10 +18,10 @@
 				{{view Todos.CreateTodoView}}
 			</header>
 
-			{{#if controller.length}}
+			{{#if controller.content.length}}
 				<section id="main">
 					<ul id="todo-list">
-						{{#each controller.filteredContent}}
+						{{#each controller}}
 							{{view Todos.TodoView contentBinding="this"}}
 						{{/each}}
 					</ul>

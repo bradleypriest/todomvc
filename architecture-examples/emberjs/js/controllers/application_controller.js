@@ -1,20 +1,21 @@
 Todos.ApplicationController = Ember.ArrayController.extend({
   currentFilter: null,
 
-  filteredContent: function(){
+  arrangedContent: function(){
     var filter = this.get('currentFilter');
+    var content = this.get('content')
     if (filter === "active"){
-      return this.filterProperty('isCompleted', false);
+      return content.filterProperty('isCompleted', false);
     } else if(filter === "completed"){
-      return this.filterProperty('isCompleted');
+      return content.filterProperty('isCompleted');
     } else {
-      return this;
+      return content;
     }
-  }.property('content', 'currentFilter', '@each.isCompleted'),
+  }.property('content', 'currentFilter', 'content.@each.isCompleted'),
 
   remaining: function() {
-    return this.filterProperty( 'isCompleted', false ).get( 'length' );
-  }.property( '@each.isCompleted' ),
+    return this.get('content').filterProperty('isCompleted', false).get('length');
+  }.property('content.@each.isCompleted'),
 
   remainingFormatted: function() {
     var remaining = this.get('remaining');
@@ -23,20 +24,21 @@ Todos.ApplicationController = Ember.ArrayController.extend({
   }.property('remaining'),
 
   completed: function() {
-    return this.filterProperty('isCompleted', true).get('length');
-  }.property('@each.isCompleted'),
+    return this.get('content').filterProperty('isCompleted', true).get('length');
+  }.property('content.@each.isCompleted'),
 
   hasCompleted: function() {
     return this.get('completed') > 0;
   }.property('completed'),
 
   allAreDone: function( key, value ) {
+    content = this.get('content')
     if ( value !== undefined ) {
-      this.setEach( 'isCompleted', value );
+      content.setEach('isCompleted', value);
       return value;
     } else {
-      return !!this.get( 'length' ) &&
-        this.everyProperty( 'isCompleted', true );
+      return !!content.get('length') &&
+        content.everyProperty('isCompleted', true);
     }
-  }.property( '@each.isCompleted' )
+  }.property('content.@each.isCompleted')
 });
