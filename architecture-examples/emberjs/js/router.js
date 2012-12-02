@@ -5,9 +5,9 @@ Todos.Router = Ember.Router.extend({
 
 	root: Ember.Route.extend({
 
-		showAll: Ember.Route.transitionTo( 'all' ),
-		showActive: Ember.Route.transitionTo( 'active' ),
-		showCompleted: Ember.Route.transitionTo( 'completed' ),
+		showAll: Ember.Route.transitionTo('all'),
+		showActive: Ember.Route.transitionTo('active'),
+		showCompleted: Ember.Route.transitionTo('completed'),
 
 		createTodo: function(router, value) {
 			if (!value.trim()) { return; }
@@ -25,6 +25,7 @@ Todos.Router = Ember.Router.extend({
 
 			var completed = controller.filterProperty('isCompleted', true);
 			completed.invoke('deleteRecord');
+
 			router.get('store').commit();
 		},
 
